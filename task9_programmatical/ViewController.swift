@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ViewController: UIViewController {
     private let topLabel: UILabel = {
@@ -59,17 +60,21 @@ class ViewController: UIViewController {
         view.addSubview(redeemLabel2)
         view.addSubview(redeemButton)
         
-        redeemLabel1.topAnchor.constraint(equalTo: view.topAnchor, constant: 24).isActive = true
-        redeemLabel1.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
-        redeemLabel2.topAnchor.constraint(equalTo: redeemLabel1.bottomAnchor, constant: 24).isActive = true
-        redeemLabel2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42).isActive = true
-        redeemLabel2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -42).isActive = true
-        
-        redeemButton.topAnchor.constraint(equalTo: redeemLabel2.bottomAnchor, constant: 12).isActive = true
-        redeemButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        redeemButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        redeemButton.widthAnchor.constraint(equalToConstant: 110).isActive = true
+        redeemLabel1.snp.makeConstraints{ make in
+            make.top.equalTo(view.snp.top).offset(24)
+            make.centerX.equalTo(view.snp.centerX)
+        }
+        redeemLabel2.snp.makeConstraints{ make in
+            make.top.equalTo(redeemLabel1.snp.bottom).offset(24)
+            make.leading.equalTo(view.snp.leading).offset(42)
+            make.trailing.equalTo(view.snp.trailing).offset(-42)
+        }
+        redeemButton.snp.makeConstraints{make in
+            make.top.equalTo(redeemLabel2.snp.bottom).offset(12)
+            make.centerX.equalTo(view.snp.centerX)
+            make.height.equalTo(40)
+            make.width.equalTo(110)
+        }
         return view
     }()
     private let redeemLabel1: UILabel = {
@@ -435,44 +440,51 @@ class ViewController: UIViewController {
         scrollInnerView.addSubview(profileStackView)
         scrollInnerView.addSubview(redeemView)
         scrollInnerView.addSubview(optionsView)
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -20),
-            
-            scrollInnerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            scrollInnerView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            scrollInnerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            scrollInnerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            scrollInnerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-        ])
-        topLabel.topAnchor.constraint(equalTo: scrollInnerView.topAnchor, constant: 10).isActive = true
-        topLabel.centerXAnchor.constraint(equalTo: scrollInnerView.centerXAnchor).isActive = true
         
-        bellButton.centerYAnchor.constraint(equalTo: topLabel.centerYAnchor).isActive = true
-        bellButton.trailingAnchor.constraint(equalTo: scrollInnerView.trailingAnchor, constant: -28).isActive = true
-        
-        profileStackView.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 26).isActive = true
-        profileStackView.centerXAnchor.constraint(equalTo: scrollInnerView.centerXAnchor).isActive = true
-        
-        redeemView.topAnchor.constraint(equalTo: profileStackView.bottomAnchor, constant: 20).isActive = true
-        redeemView.leadingAnchor.constraint(equalTo: scrollInnerView.leadingAnchor, constant: 26).isActive = true
-        redeemView.trailingAnchor.constraint(equalTo: scrollInnerView.trailingAnchor, constant: -26).isActive = true
-        redeemView.heightAnchor.constraint(equalToConstant: 179).isActive = true
-    
-        optionsView.topAnchor.constraint(equalTo: redeemView.bottomAnchor, constant: 16).isActive = true
-        optionsView.leadingAnchor.constraint(equalTo: scrollInnerView.leadingAnchor,constant: 26).isActive = true
-        optionsView.trailingAnchor.constraint(equalTo: scrollInnerView.trailingAnchor,constant: -26).isActive = true
-        optionsView.bottomAnchor.constraint(equalTo: scrollInnerView.bottomAnchor).isActive = true
-        
-        optionsStackView.topAnchor.constraint(equalTo: optionsView.topAnchor,constant: 20).isActive = true
-        optionsStackView.bottomAnchor.constraint(equalTo: optionsView.bottomAnchor,constant: -10).isActive = true
-        optionsStackView.leadingAnchor.constraint(equalTo: optionsView.leadingAnchor,constant: 16).isActive = true
-        optionsStackView.trailingAnchor.constraint(equalTo: optionsView.trailingAnchor,constant: -16).isActive = true
-        
+        scrollView.snp.makeConstraints{make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+        }
+        scrollInnerView.snp.makeConstraints{make in
+            make.width.equalTo(scrollView.snp.width)
+            make.top.equalTo(scrollView.snp.top)
+            make.leading.equalTo(scrollView.snp.leading)
+            make.trailing.equalTo(scrollView.snp.trailing)
+            make.bottom.equalTo(scrollView.snp.bottom)
+        }
+        topLabel.snp.makeConstraints{make in
+            make.top.equalTo(scrollInnerView.snp.top).offset(10)
+            make.centerX.equalTo(scrollInnerView.snp.centerX)
+        }
+        bellButton.snp.makeConstraints{make in
+            make.centerY.equalTo(topLabel.snp.centerY)
+            make.trailing.equalTo(scrollInnerView.snp.trailing).offset(-28)
+        }
+        profileStackView.snp.makeConstraints{make in
+            make.top.equalTo(topLabel.snp.bottom).offset(26)
+            make.centerX.equalTo(scrollInnerView.snp.centerX)
+        }
+        redeemView.snp.makeConstraints{make in
+            make.top.equalTo(profileStackView.snp.bottom).offset(20)
+            make.leading.equalTo(scrollInnerView.snp.leading).offset(26)
+            make.trailing.equalTo(scrollInnerView.snp.trailing).offset(-26)
+            make.height.equalTo(179)
+        }
+        optionsView.snp.makeConstraints{make in
+            make.top.equalTo(redeemView.snp.bottom).offset(16)
+            make.leading.equalTo(scrollInnerView.snp.leading).offset(26)
+            make.trailing.equalTo(scrollInnerView.snp.trailing).offset(-26)
+            make.bottom.equalTo(scrollInnerView.snp.bottom)
+        }
+        optionsStackView.snp.makeConstraints{make in
+            make.top.equalTo(optionsView.snp.top).offset(20)
+            make.bottom.equalTo(optionsView.snp.bottom).offset(-10)
+            make.leading.equalTo(optionsView.snp.leading).offset(16)
+            make.trailing.equalTo(optionsView.snp.trailing).offset(-16)
+        }
     }
-    
 }
 extension ViewController: UIGestureRecognizerDelegate{
     
